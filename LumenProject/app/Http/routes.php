@@ -21,6 +21,18 @@ $app->get('/nextCommand', function () use ($app) {
     return $redis->rpop('spheroCommands');
 });
 
+/**
+ * @api {get} /roll/key/:key/ball/:ballId/angle/:angle/speed/:speed
+ * @apiName RollBall
+ * @apiGroup SpheroCommands
+ * 
+ * @apiParam {String} client api key 
+ * @apiParam {Number} ball id number 0 - first ball, 1 - second ball, 2 - both balls
+ * @apiParam {Number} angle from opposite backlight to travel 0-359
+ * @apiParam {Number} speed 0-1000 increments of 10 on how fast ball should travel
+ *
+ * @apiSuccess {String} Success
+ */ 
 $app->get('/roll/key/{key}/ball/{ball}/angle/{angle}/speed/{speed}', function ($key, $ball, $angle, $speed) {
 	try{
 	    $redis = new Predis\Client();
@@ -56,6 +68,18 @@ $app->get('/roll/key/{key}/ball/{ball}/angle/{angle}/speed/{speed}', function ($
 	}
 });
 
+/**
+ * @api {get} /color/key/:key/ball/:ballId/red/:red/green/:green/blue/:blue
+ * @apiName ColorBall
+ * @apiGroup SpheroCommands
+ *
+ * @apiParam {String} client api key 
+ * @apiParam {Number} ball id number 0 - first ball, 1 - second ball, 2 - both balls
+ * @apiParam {Number} angle from opposite backlight to travel 0-359
+ * @apiParam {Number} speed 0-1000 increments of 10 on how fast ball should travel
+ *
+ * @apiSuccess {String} Success
+ */
 $app->get('/color/key/{key}/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($key, $ball, $red, $green, $blue) {
 
 	try{
