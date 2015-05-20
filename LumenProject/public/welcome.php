@@ -176,11 +176,14 @@
                                         url:        "/register",
                                         type:       "POST",
                                         data:       form,
+                                        dataType:   "json",
                                         success:    function(apiKey){
-                                          if(apikey == 'error'){
+                                          if(apiKey.type == 'error'){
                                             $('div#apikey').html("<p>failure registering, please try again!</p>");
+                                          }else if(apiKey.type == 'invalid'){
+                                            $('div#apikey').html("<p>please fill in "+apiKey.field+"</p>");
                                           }else{
-                                            $('div#apikey').html("<p>Your API Key: <span style='font-weight:bold'>" + apiKey +"</span></p><p>Please make sure you copy this key. You will need it to send commands to the sphero.</p>");
+                                            $('div#apikey').html("<p>Your API Key: <span style='font-weight:bold'>" + apiKey.key +"</span></p><p>Please make sure you copy this key. You will need it to send commands to the sphero.</p>");
                                           }
                                         }
                                     });

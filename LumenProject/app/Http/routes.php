@@ -144,6 +144,12 @@ $app->post('/register', function (Request $Request) {
 		'intersted' => $Request->intersted
 	);
 
+	foreach ($data as $key => $value) {
+		if($key != 'intersted' && empty($value)){
+			return json_encode(array("type" => "invalid", "field" => $key));
+		}
+	}
+
 	try{
 		// spin up redis
 		$redis = new Predis\Client();
@@ -152,8 +158,8 @@ $app->post('/register', function (Request $Request) {
 		$redis->set($hash, json_encode($data));
 
 		// return key
-		return $hash;
+		return json_encode(array("type" => "success", "key" => $hash));
 	}catch(Exception $E){
-		return "error";
+		return array("type" => "error", "message" => $E->getMessage());
 	}
 });
