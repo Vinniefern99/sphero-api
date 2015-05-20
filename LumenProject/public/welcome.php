@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6 col-sm-offset-3" id="apikey"></div>
+                                    <div class="col-sm-10 col-sm-offset-2" id="apikey"></div>
                                 </div>
                             </div>
                           </div>
