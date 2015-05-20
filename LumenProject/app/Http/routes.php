@@ -12,7 +12,7 @@
 */
 
 $app->get('/', function() use ($app) {
-    return $app->welcome();
+    return file_get_contents("welcome.php");
 });
 
 $app->get('/nextCommand', function () use ($app) {
