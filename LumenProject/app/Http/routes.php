@@ -21,6 +21,17 @@ $app->get('/nextCommand', function () use ($app) {
     return $redis->rpop('spheroCommands');
 });
 
+/**
+ * @api {get} /roll/ball/:ballId/angle/:angle/speed/:speed
+ * @apiName RollBall
+ * @apiGroup SpheroCommands
+ * 
+ * @apiParam {Number} ball id number 0 - first ball, 1 - second ball, 2 - both balls
+ * @apiParam {Number} angle from opposite backlight to travel 0-359
+ * @apiParam {Number} speed 0-1000 increments of 10 on how fast ball should travel
+ *
+ * @apiSuccess {String} Success
+ */ 
 $app->get('/roll/ball/{ball}/angle/{angle}/speed/{speed}', function ($ball, $angle, $speed) {
     $validBalls = array ('0', '1', '2');
 
@@ -47,6 +58,17 @@ $app->get('/roll/ball/{ball}/angle/{angle}/speed/{speed}', function ($ball, $ang
     return 'Success';
 });
 
+/**
+ * @api {get} /color/ball/:ballId/red/:red/green/:green/blue/:blue
+ * @apiName ColorBall
+ * @apiGroup SpheroCommands
+ * 
+ * @apiParam {Number} ball id number 0 - first ball, 1 - second ball, 2 - both balls
+ * @apiParam {Number} angle from opposite backlight to travel 0-359
+ * @apiParam {Number} speed 0-1000 increments of 10 on how fast ball should travel
+ *
+ * @apiSuccess {String} Success
+ */
 $app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($ball, $red, $green, $blue) {
 
     $validBalls = array ('0', '1', '2');
