@@ -21,65 +21,83 @@ $app->get('/nextCommand', function () use ($app) {
     return $redis->rpop('spheroCommands');
 });
 
-$app->get('/roll/ball/{ball}/angle/{angle}/speed/{speed}', function ($ball, $angle, $speed) {
-    $validBalls = array ('0', '1', '2');
+$app->get('/roll/key/{key}/ball/{ball}/angle/{angle}/speed/{speed}', function ($key, $ball, $angle, $speed) {
+	try{
+	    $redis = new Predis\Client();
 
-    if (!in_array($ball, $validBalls)) {
-        return 'Invalid ballId';
-    }
+	    if(!$redis->exists($key)){
+			return 'This is not a registered key. Please register <a href="http://sphero-api.hopto.org">here</a>';
+		}
 
-    if ($angle > 359 || $angle < 0) {
-        return 'Invalid angle...should be between 0 and 359';
-    }
+	   	$validBalls = array ('0', '1', '2');
 
-    if ($speed > 1000 || $speed < 10) {
-        return 'Invalid speed...shoudl be between 10 and 1000';
-    }
-    $data = array(
-        'action' => 'roll',
-        'angle' => $angle,
-        'speed' => $speed,
-        'ball' => $ball
-    );
+	    if (!in_array($ball, $validBalls)) {
+	        return 'Invalid ballId';
+	    }
 
-    $redis = new Predis\Client();
-    $redis->lpush('spheroCommands', json_encode($data));
-    return 'Success';
+	    if ($angle > 359 || $angle < 0) {
+	        return 'Invalid angle...should be between 0 and 359';
+	    }
+
+	    if ($speed > 1000 || $speed < 10) {
+	        return 'Invalid speed...shoudl be between 10 and 1000';
+	    }
+	    $data = array(
+	        'action' => 'roll',
+	        'angle' => $angle,
+	        'speed' => $speed,
+	        'ball' => $ball
+	    );
+
+	    $redis->lpush('spheroCommands', json_encode($data));
+	    return 'Your command has been sent. You command is currently the ' . $redis->llen('spheroCommands') .' command. Watch they ball it will excute shortly.';
+    }catch(Exception $E){
+		return $E->getMessage();
+	}
 });
 
-$app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($ball, $red, $green, $blue) {
+$app->get('/color/key/{key}/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($key, $ball, $red, $green, $blue) {
 
-    $validBalls = array ('0', '1', '2');
+	try{
+		$redis = new Predis\Client();
 
-    if (!in_array($ball, $validBalls)) {
-        return 'Invalid ballId';
-    }
+		if(!$redis->exists($key)){
+			return 'This is not a registered key. Please register <a href="http://sphero-api.hopto.org">here</a>';
+		}
 
-    $min = 0;
-    $max = 255;
+	    $validBalls = array ('0', '1', '2');
 
-    if ($red < $min || $red > $max) {
-        return 'Invalid red value...should be between 0 and 255';
-    }
-    if ($green < $min || $green > $max) {
-        return 'Invalid green value...should be between 0 and 255';
-    }
+	    if (!in_array($ball, $validBalls)) {
+	        return 'Invalid ballId';
+	    }
 
-    if ($blue < $min || $blue > $max) {
-        return 'Invalid blue value...should be between 0 and 255';
-    }
+	    $min = 0;
+	    $max = 255;
 
-    $data = array(
-        'action' => 'color',
-        'red' => $red,
-        'green' => $green,
-        'blue' => $blue,
-        'ball' => $ball
-    );
+	    if ($red < $min || $red > $max) {
+	        return 'Invalid red value...should be between 0 and 255';
+	    }
+	    if ($green < $min || $green > $max) {
+	        return 'Invalid green value...should be between 0 and 255';
+	    }
 
-    $redis = new Predis\Client();
-    $redis->lpush('spheroCommands', json_encode($data));
-    return 'Success';
+	    if ($blue < $min || $blue > $max) {
+	        return 'Invalid blue value...should be between 0 and 255';
+	    }
+
+	    $data = array(
+	        'action' => 'color',
+	        'red' => $red,
+	        'green' => $green,
+	        'blue' => $blue,
+	        'ball' => $ball
+	    );
+
+	    $redis->lpush('spheroCommands', json_encode($data));
+	    return 'Your command has been sent. You command is currently the ' . $redis->llen('spheroCommands') .' command. Watch they ball it will excute shortly.';
+	}catch(Exception $E){
+		return $E->getMessage();
+	}
 
 });
 

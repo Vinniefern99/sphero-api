@@ -17,10 +17,6 @@
                 <![endif]-->
 
                 <style type="text/css">
-                  body {
-                    padding-top: 90px;
-                  }
-
                   .panel-login {
                     border-color: #ccc;
                     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -184,7 +180,7 @@
                                           if(apikey == 'error'){
                                             $('div#apikey').html("<p>failure registering, please try again!</p>");
                                           }else{
-                                            $('div#apikey').html("<p>Your API Key: <span style='font-weight:bold'>" + apiKey +"</span></p>");
+                                            $('div#apikey').html("<p>Your API Key: <span style='font-weight:bold'>" + apiKey +"</span></p><p>Please make sure you copy this key. You will need it to send commands to the sphero.</p>");
                                           }
                                         }
                                     });
