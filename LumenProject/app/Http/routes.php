@@ -41,7 +41,7 @@ $app->get('/roll/ball/{ball}/angle/{angle}/speed/{speed}', function ($ball, $ang
         'ball' => $ball
     );
 
-    $redis = new Predis\Client(array('host' => 'personal-rds.cdgfbmp7jqyx.us-west-2.rds.amazonaws.com', 'port' => 6379));
+    $redis = new Predis\Client();
     $redis->lpush('spheroCommands', json_encode($data));
     return 'Success';
 });
@@ -75,7 +75,7 @@ $app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($b
         'blue' => $blue
     );
 
-     $redis = new Predis\Client(array('host' => 'personal-rds.cdgfbmp7jqyx.us-west-2.rds.amazonaws.com', 'port' => 6379));
+     $redis = new Predis\Client();
     $redis->lpush('spheroCommands', json_encode($data));
     return 'Success';
 
