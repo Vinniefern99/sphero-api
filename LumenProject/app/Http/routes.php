@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,8 +77,23 @@ $app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($b
         'ball' => $ball
     );
 
-     $redis = new Predis\Client();
+    $redis = new Predis\Client();
     $redis->lpush('spheroCommands', json_encode($data));
     return 'Success';
 
+});
+
+$app->post('/register', function (Request $Request) {
+	$hash = md5($Request->email.$Request->firstName.$Request->lastName.$Request->position.$Request->intersted);
+	$data = array(
+		'email' 	=> $Request->email,
+		'firstName' => $Request->firstName,
+		'lastName' 	=> $Request->lastName,
+		'position' 	=> $Request->position,
+		'intersted' => $Request->intersted
+	);
+
+	$redis = new Predis\Client();
+	$redis->set($hash, json_encode($data));
+	return $hash;
 });
