@@ -128,8 +128,8 @@ $app->get('/color/key/{key}/ball/{ball}/red/{red}/green/{green}/blue/{blue}', fu
 /**
  * register route
  * 
- * @apiParam {Request} data used to register account
- * @apiSuccess {String}
+ * @param {Request} data used to register account
+ * @return {String}
  */
 $app->post('/register', function (Request $Request) {
 	// create hash
