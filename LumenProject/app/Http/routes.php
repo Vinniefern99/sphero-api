@@ -72,7 +72,8 @@ $app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($b
         'action' => 'color',
         'red' => $red,
         'green' => $green,
-        'blue' => $blue
+        'blue' => $blue,
+        'ball' => $ball
     );
 
      $redis = new Predis\Client();
