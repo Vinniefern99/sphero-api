@@ -83,8 +83,17 @@ $app->get('/color/ball/{ball}/red/{red}/green/{green}/blue/{blue}', function ($b
 
 });
 
+/**
+ * register route
+ * 
+ * @param {} $Request data we are going to register
+ * @return string hash(api key)
+ */
 $app->post('/register', function (Request $Request) {
-	$hash = md5($Request->email.$Request->firstName.$Request->lastName.$Request->position.$Request->intersted);
+	// create hash
+	$hash = md5($Request->email.$Request->firstName.$Request->lastName.$Request->position);
+	
+	// gather data
 	$data = array(
 		'email' 	=> $Request->email,
 		'firstName' => $Request->firstName,
@@ -93,7 +102,16 @@ $app->post('/register', function (Request $Request) {
 		'intersted' => $Request->intersted
 	);
 
-	$redis = new Predis\Client();
-	$redis->set($hash, json_encode($data));
-	return $hash;
+	try{
+		// spin up redis
+		$redis = new Predis\Client();
+
+		// register the user
+		$redis->set($hash, json_encode($data));
+
+		// return key
+		return $hash;
+	}catch(Exception $E){
+		return "error";
+	}
 });

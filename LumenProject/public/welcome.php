@@ -109,6 +109,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3" id="apikey"></div>
+                                </div>
                             </div>
                           </div>
                         </div>
@@ -177,9 +180,12 @@
                                         url:        "/register",
                                         type:       "POST",
                                         data:       form,
-                                        dataType:   "json",
-                                        success:    function(Response){
-                                            console.log(Response);
+                                        success:    function(apiKey){
+                                          if(apikey == 'error'){
+                                            $('div#apikey').html("<p>failure registering, please try again!</p>");
+                                          }else{
+                                            $('div#apikey').html("<p>Your API Key: <span style='font-weight:bold'>" + apiKey +"</span></p>");
+                                          }
                                         }
                                     });
 
