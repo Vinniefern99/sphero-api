@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" disabled value="Register Now">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
                                         </div>
                                     </div>
                                 </div>
@@ -151,16 +151,16 @@
                                         $("input[name="+ nameInput +"Validate]").val(0);
                                     }
 
-                                    if(
-                                        $("input[name=emailValidate]").val() == 1
-                                        && $("input[name=firstnameValidate]").val() == 1
-                                        && $("input[name=lastnameValidate]").val() == 1
-                                        && $("input[name=positionValidate]").val() == 1
-                                    ){
-                                        $("#register-submit").attr("disabled", false);
-                                    }else{
-                                        $("#register-submit").attr("disabled", true);
-                                    }
+                                    // if(
+                                    //     $("input[name=emailValidate]").val() == 1
+                                    //     && $("input[name=firstnameValidate]").val() == 1
+                                    //     && $("input[name=lastnameValidate]").val() == 1
+                                    //     && $("input[name=positionValidate]").val() == 1
+                                    // ){
+                                    //     $("#register-submit").attr("disabled", false);
+                                    // }else{
+                                    //     $("#register-submit").attr("disabled", true);
+                                    // }
                                 });
 
                                 $("#register-submit").click(function(){
