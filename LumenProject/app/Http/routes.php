@@ -157,6 +157,11 @@ $app->post('/register', function (Request $Request) {
 		// register the user
 		$redis->set($hash, json_encode($data));
 
+		if(!$redis->exist("email_" . $hash)){
+			mail($Request->email, "Red Ventures - Sphero Registration", "<p>Thanks for registering, " . $Request->firstName .".<br /><br />Your API key is " . $hash ." and the docs to how to send the shpero commands is located <a href='sphero-api.hopto.org/docs' target='_blank'>here</a>. Have fun!</p>");
+			$redis->set("email_" . $hash);
+		}
+
 		// return key
 		return json_encode(array("type" => "success", "key" => $hash));
 	}catch(Exception $E){
