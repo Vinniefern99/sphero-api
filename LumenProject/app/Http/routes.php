@@ -168,3 +168,31 @@ $app->post('/register', function (Request $Request) {
 		return array("type" => "error", "message" => $E->getMessage());
 	}
 });
+
+
+$app->get('/getInfo', function () {
+
+	try{
+		// spin up redis
+		$redis = new Predis\Client();
+
+		// register the user
+		$RedisData = $redis->keys("*");
+
+		$dataArray = [];
+		// return key
+		foreach ($RedisData as $key) {
+			if(strlen($key) != 32){
+				continue;
+			}
+			$jsonData = $redis->get($key);
+			if(!empty($jsonData)){
+				$dataArray[$key] = json_decode($jsonData);
+			}
+		}
+		echo "<pre>" . print_r($dataArray, true) ."</pre>";
+		return;
+	}catch(Exception $E){
+		return array("type" => "error", "message" => $E->getMessage());
+	}
+});
